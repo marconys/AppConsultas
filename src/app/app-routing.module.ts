@@ -11,6 +11,18 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'medicos',
+    loadChildren: () => import('./medicos/medicos/medicos.module').then( m => m.MedicosPageModule)
+  },
+  {
+    path: 'agenda-hans',
+    loadChildren: () => import('./agendaHans/agenda-hans/agenda-hans.module').then( m => m.AgendaHansPageModule)
+  },
+  {
+    path: 'agendaelias',
+    loadChildren: () => import('./agendaElias/agendaelias/agendaelias.module').then( m => m.AgendaeliasPageModule)
+  },
 ];
 
 @NgModule({

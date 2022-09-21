@@ -1,0 +1,64 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button>
+          <ion-menu-button></ion-menu-button>
+          <ion-back-button></ion-back-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Dr. Hans Chucrute</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-list>
+
+    <ion-item lines="full">
+      <ion-thumbnail slot="start">
+        <img alt="Silhouette of mountains" src="https://avatars.githubusercontent.com/u/102155193?v=4"/>
+      </ion-thumbnail>
+      <ion-badge></ion-badge>
+    <ion-label><strong>Dr. Elias Maluco</strong>
+      <p>Médico Samurai</p>
+    </ion-label>    
+  </ion-item>
+
+    <ion-item *ngIf="consultas.length < 1">
+
+      <ion-label>Não há Consultas</ion-label>
+
+    </ion-item>
+
+    <ion-item-sliding *ngFor="let consulta of consultas">
+
+      <ion-item (click)="abrirOpcoes(consulta)">
+
+        <ion-label *ngIf="!consulta.feito">{{consulta.nome}} - {{consulta.hora}}</ion-label>
+
+        <ion-icon *ngIf="!consulta.feito" slot="start" name="radio-button-off" color="success"></ion-icon>
+
+
+
+        <ion-label *ngIf="consulta.feito"><del>{{consulta.nome}} - {{consulta.hora}}</del> </ion-label>
+
+        <ion-icon *ngIf="consulta.feito" slot="start" name="checkmark-circle" color="success"></ion-icon>
+
+      </ion-item>
+
+      <ion-item-options side="start">
+
+        <ion-item-option color="danger" (click)="excluir(consulta)">
+
+          Excluir
+
+        </ion-item-option>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <ion-button (click)="addConsulta()" expand="block" class="ion-padding" shape="round">Agendar Consulta</ion-button>
+
+</ion-content>
