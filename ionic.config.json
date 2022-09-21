@@ -1,0 +1,7 @@
+{
+  "name": "appConsult",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
