@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AgendaeliasPageRoutingModule } from './agendaelias-routing.module';
+import { DadosMedicoPageRoutingModule } from './agenda-medico-routing.module';
 
-import { AgendaeliasPage } from './agendaelias.page';
+import { DadosMedicoPage } from './agenda-medico.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AgendaeliasPageRoutingModule
+    DadosMedicoPageRoutingModule
   ],
-  declarations: [AgendaeliasPage]
+  declarations: [DadosMedicoPage]
 })
-export class AgendaeliasPageModule {}
+export class DadosMedicoPageModule {}

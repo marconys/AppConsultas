@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button>
+          <ion-menu-button></ion-menu-button>
+          <ion-back-button></ion-back-button>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="primary" (click)="sair()">
+      <ion-button
+        >Sair
+        <ion-icon slot="start" name="exit"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Médicos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let medico of listaMedicos" lines="full" (click)="exibirmedico(medico)">
+      <ion-thumbnail slot="start">
+        <img alt="Silhouette of mountains" [src]="medico.foto" />
+      </ion-thumbnail>
+      <ion-badge></ion-badge>
+    <ion-label><strong>{{medico.nome}}</strong>
+      <p>{{medico.especialidade}}</p>
+    </ion-label>
+  </ion-item>
+
+  </ion-list>
+
+</ion-content>

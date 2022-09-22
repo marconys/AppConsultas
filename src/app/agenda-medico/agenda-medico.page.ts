@@ -1,29 +1,37 @@
 import { Component, OnInit } from '@angular/core';
+import { AgendasService } from '../services/agendas.service';
+import { IMedico } from '../models/IMedico.model';
 import { ActionSheetController, AlertController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-agenda-hans',
-  templateUrl: './agenda-hans.page.html',
-  styleUrls: ['./agenda-hans.page.scss'],
+  selector: 'app-dados-medico',
+  templateUrl: './agenda-medico.page.html',
+  styleUrls: ['./agenda-medico.page.scss'],
 })
-export class AgendaHansPage implements OnInit {
+export class DadosMedicoPage implements OnInit {
 
+  medico: IMedico;
   consultas: any[] = []; //Matriz tarefas (nome, feito)
   constructor(
+    public agendasService: AgendasService,
+    private router: Router,
     private alertCtrl: AlertController,
     private toastCtrl: ToastController,
-    private actionSheetCtrl: ActionSheetController
+    private actionSheetCtrl: ActionSheetController) {
 
-  ) { 
-    //Carregando tarefas a partir do localStorage
-    let consultaJson = localStorage.getItem('consultaDb');
-    if (consultaJson != null) {
-      this.consultas = JSON.parse(consultaJson);
-    }
-  }
+        //Carregando tarefas a partir do localStorage
+        const consultaJson = localStorage.getItem('consultaDb');
+        if (consultaJson != null) {
+          this.consultas = JSON.parse(consultaJson);
+        }
+     }
+
   ngOnInit() {
-   
+    this. medico = this.agendasService.buscarAgendas('medico');
+    console.log('Médico Enviado', this.medico);
   }
+
   async addConsulta() {
     const alerta = await this.alertCtrl.create({
       header: 'Escolha o Horário da sua consulta',
@@ -34,7 +42,7 @@ export class AgendaHansPage implements OnInit {
       buttons: [{
         text: 'Cancelar', role: 'cancel', cssClass: 'light', handler: () => {
           //Comandos executados caso o usuário click em cancelar
-          console.log('Você Cancelou')
+          console.log('Você Cancelou');
         }
       },
       {
@@ -57,7 +65,7 @@ export class AgendaHansPage implements OnInit {
       });
       toast.present();
     }else{
-      let consulta = { nome: nova.txtnome, hora: nova.txthora, feito: false }
+      const consulta = { nome: nova.txtnome, hora: nova.txthora, feito: false };
       this.consultas.push(consulta);
       //Armazenando no dispositivo
       this.atualizaLocalStorage();
@@ -69,20 +77,20 @@ export class AgendaHansPage implements OnInit {
       });
       toast.present();
     }
-    
+
   }
   async abrirOpcoes(consulta: any) {
     const actsheet = await this.actionSheetCtrl.create({
       header:'Escolha uma ação!',
       buttons:[
-        {text:consulta.feito?'Marcar Consulta':'Desmarcar Consulta', 
+        {text:consulta.feito?'Marcar Consulta':'Desmarcar Consulta',
          icon:consulta.feito?'radio-Button-off':'checkmark-circle',
         handler:()=>{
           consulta.feito=!consulta.feito;
           this.atualizaLocalStorage();
         }},
         {
-          text:'Cancelar', icon:'close', role:'cancel', 
+          text:'Cancelar', icon:'close', role:'cancel',
           handler:()=>{}
         }
       ]
@@ -90,6 +98,7 @@ export class AgendaHansPage implements OnInit {
     actsheet.present();
   }
   excluir(consulta: any) {
+    // eslint-disable-next-line eqeqeq
     this.consultas = this.consultas.filter(res => consulta != res);
     this.atualizaLocalStorage();
   }
@@ -97,4 +106,10 @@ export class AgendaHansPage implements OnInit {
   atualizaLocalStorage(){
     localStorage.setItem('consultaDb',JSON.stringify(this.consultas));
   }
+
+  sair(){
+    this.router.navigate(['home']);
+  }
 }
+
+
